@@ -1,0 +1,28 @@
+.navigation-main {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+}
+
+.navigation-main__link {
+  cursor: pointer;
+  font-size: 12px;
+  line-height: 16px;
+  font-weight: 500;
+  color: white;
+  text-decoration: none;
+  transition: opacity .2s;
+}
+
+.navigation-main__link:hover {
+  opacity: 0.7;
+}
+
+.navigation-main__link_accented {
+  color: black;
+  /* width: 76px;
+  height: 32px; */
+  padding: 8px 20.2px;
+  background-color: #3DDC84;
+  border-radius: 3px;
+}
