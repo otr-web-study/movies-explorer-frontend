@@ -4,7 +4,7 @@ import './Container.css';
 
 function Container({ children, className, loggedIn }) {
   return (
-    <div className={`container page__container ${className}`}>
+    <div className={className}>
       <Header loggedIn={loggedIn} />
       {children}
       <Footer />

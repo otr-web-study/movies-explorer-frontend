@@ -1,20 +1,17 @@
-import { useState } from 'react';
 import './Header.css';
 import Navigation from '../Navigation';
-import NavigationMain from '../NavigationMain';
+import NavigationExt from '../NavigationExt';
 import Logo from '../Logo';
 
 function Header( { loggedIn }) {
-  const [isHamburgerToggle, setIsHamburgerToggle] = useState(false);
-
-  const handleHamburgerToggle = () => {
-    setIsHamburgerToggle(!isHamburgerToggle);
-  }
-
   return (
     <header className='header'>
       <Logo />
-      {loggedIn ? <Navigation isActive={isHamburgerToggle}/>: <NavigationMain />}
+      {
+        loggedIn ? 
+          <NavigationExt />: 
+          <Navigation />
+      }
     </header>
   );
 }

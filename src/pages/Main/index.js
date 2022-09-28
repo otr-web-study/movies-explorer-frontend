@@ -4,7 +4,7 @@ import Container from '../../components/Container';
 
 function Main({ loggedIn }) {
   return (
-    <Container className='main' loggedIn={loggedIn}>
+    <Container className='container page__container main' loggedIn={loggedIn}>
       <div>
         hello, world
       </div>

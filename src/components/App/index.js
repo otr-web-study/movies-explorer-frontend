@@ -1,10 +1,15 @@
+import { Route, Switch } from 'react-router-dom'
 import './App.css';
 import Main from '../../pages/Main';
 
 function App() {
   return (
     <div className="page">
-      <Main loggedIn={false} />
+      <Switch>
+        <Route exact path="/">
+          <Main loggedIn={true} />
+        </Route>
+      </Switch>
     </div>
   )
 }
