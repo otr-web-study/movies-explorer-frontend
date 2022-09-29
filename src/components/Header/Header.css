@@ -1,11 +1,11 @@
 .header {
   min-height: 74px;
-  background-color: #073042;
+  background-color: inherit;
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 0 70px;
-  position: relative;
+  box-sizing: border-box;
 }
 
 @media screen and (max-width: 1279px) {

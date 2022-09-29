@@ -1,17 +1,12 @@
-import { useState } from 'react';
 import './NavigationExt.css';
 import Link from '../Link';
 import Avatar from '../Avatar';
+import SideBar from '../SideBar';
 
 function NavigationExt() {
-  const [isHamburgerToggle, setIsHamburgerToggle] = useState(false);
-
-  const handleHamburgerToggle = () => {
-    setIsHamburgerToggle(!isHamburgerToggle);
-  }
-
   return (
     <>
+      <SideBar />
       <nav className='navigation-ext'>
         <Link 
           href='/movies'
