@@ -5,6 +5,7 @@ import Footer from '../../components/Footer';
 import Promo from '../../components/Promo';
 import AboutProject from '../../components/AboutProject';
 import Techs from '../../components/Techs';
+import AboutMe from '../../components/AboutMe';
 
 function Main({ loggedIn }) {
   return (
@@ -14,6 +15,7 @@ function Main({ loggedIn }) {
       <Footer />
       <AboutProject />
       <Techs />
+      <AboutMe />
     </Container>
   )
 }
