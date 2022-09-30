@@ -1,0 +1,12 @@
+.techs {
+  box-sizing: border-box;
+  padding: 100px 70px 0;
+  background-color: #272727;
+  min-height: 625px;
+  display: flex;
+  flex-direction: column;
+}
+
+.techs__title {
+  margin: 0;
+}
