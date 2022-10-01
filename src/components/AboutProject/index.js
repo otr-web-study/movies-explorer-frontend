@@ -32,12 +32,12 @@ function AboutProject() {
         <p className='about-project__time-text'>
           4 недели
         </p>
-        <caption className='about-project__time-caption'>
+        <p className='about-project__time-caption'>
           Back-end
-        </caption>
-        <caption className='about-project__time-caption'>
+        </p>
+        <p className='about-project__time-caption'>
           Front-end
-        </caption>
+        </p>
       </div>
     </section>
   );

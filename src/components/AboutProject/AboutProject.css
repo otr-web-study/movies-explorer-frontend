@@ -24,6 +24,7 @@
   font-size: 20px;
   line-height: 24px;
   font-weight: 400;
+  letter-spacing: -.04em;
 }
 
 .about-project__text {
@@ -57,6 +58,7 @@
 }
 
 .about-project__time-caption {
+  margin: 0;
   font-size: 14px;
   line-height: 17px;
   font-weight: 500;

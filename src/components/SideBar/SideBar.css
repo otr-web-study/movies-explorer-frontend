@@ -22,8 +22,8 @@
   position: absolute;
   left: 0;
   top: 0;
-  width: 100vw;
-  height: 100vh;
+  right: 0;
+  bottom: 0;
   opacity: 0;
   transition: opacity .2s;
 }
@@ -75,6 +75,7 @@
   border: 1px solid white;
   transform: rotate(45deg);
   position: absolute;
+  top: 0;
 }
 
 .sidebar__button::after {
@@ -83,6 +84,7 @@
   border: 1px solid white;
   transform: rotate(-45deg);
   position: absolute;
+  top: 0;
 }
 
 @media screen and (max-width: 767px) {
