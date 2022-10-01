@@ -39,6 +39,7 @@ function SideBar() {
           <LinkComponent
             onClick={handleHamburgerToggle}
             href='/'
+            exact
             className='link sidebar__link'
             activeClassName='sidebar__link_active'>Главная</LinkComponent>
           <LinkComponent

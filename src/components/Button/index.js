@@ -1,10 +1,11 @@
 import './Button.css';
 
-function Button({ className, title, onClick }) {
+function Button({ className, title, onClick, type }) {
   return (
     <button 
       className={`button ${className || ''}`}
-      onClick={onClick}>
+      onClick={onClick}
+      type={type}>
       {title}
     </button>
   );
