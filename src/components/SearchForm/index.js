@@ -1,19 +1,20 @@
-import { useState } from 'react';
 import './SearchForm.css';
 import Button from '../Button';
 import InputError from '../InputError';
 import FilterCheckbox from '../FilterCheckbox';
+import { useInputRefWithValidation, useFormValid } from '../../utils/formValidators';
 
 function SearchForm() {
-  const [searchString, setSearchString] = useState('');
-  const inputIsValid = false;
+  const searchString = useInputRefWithValidation('');
+  const [isFormValid] = useFormValid([searchString]);
 
   const handleSubmit = (evt) => {
     evt.preventDefault();
-  }
 
-  const handleSearchStringChange = (evt) => {
-    setSearchString(evt.target.value);
+    searchString.checkValidity();
+    if (!isFormValid) {
+      return;
+    }
   }
 
   return (
@@ -25,14 +26,18 @@ function SearchForm() {
       noValidate>
       <div className='search-form__container'>
         <input
-          value={searchString || ''}
-          onChange={handleSearchStringChange}
+          ref={searchString.ref}
+          onChange={searchString.onChange}
           className='search-form__input'
           placeholder='Фильм'
+          required
           name='search'
           id='search' />
         <Button className='search-form__button-submit' />
-        <InputError className='search-form__error' isValid={inputIsValid} />
+        <InputError 
+          className='search-form__error'
+          isValid={searchString.isValid}
+          errorMessage={searchString.validationMessage} />
       </div>
       <FilterCheckbox title='Короткометражки' />
       <div className='search-form__underline'></div>
