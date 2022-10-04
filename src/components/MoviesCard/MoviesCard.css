@@ -1,26 +1,27 @@
 .movies-card {
-  width: 360px;
   display: flex;
   flex-direction: column;
+  position: relative;
 }
 
 .movies-card__image {
-  width: 360px;
+  width: 100%;
   height: 201px;
-  object-fit: contain;
+  max-width: 360px;
+  object-fit: cover;
   object-position: center;
   border-radius: 6px;
 }
 
 .movies-card__container {
-  box-sizing: border-box;
-  height: 32px;
-  padding: 14px 14px 0;
+  height: 18px;
+  margin: 14px 14px 0;
   display: flex;
   justify-content: space-between;
 }
 
 .movies-card__caption {
+  margin: 0;
   width: 250px;
   font-size: 13px;
   line-height: 16px;
@@ -29,14 +30,81 @@
 }
 
 .movies-card__duration {
+  box-sizing: border-box;
   margin: 0;
+  padding: 3px 0;
   text-align: center;
   width: 52px;
   height: 18px;
-  font-size: 10px;
+  font-size: 11px;
   line-height: 11px;
   font-weight: 400;
   color: #8B8B8B;
   background-color: #2F2F2F;
   border-radius: 3px;
+}
+
+.movies-card__save-button {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  width: 72px;
+  height: 21px;
+  background-color: #313131;
+  border: none;
+  border-radius: 30px;
+  font-size: 10px;
+  line-height: 9px;
+  font-weight: 400;
+  color: white;
+  opacity: 0;
+  transition: opacity .2s;
+  cursor: pointer;
+}
+
+.movies-card__link:hover + .movies-card__save-button {
+  opacity: 1;
+}
+
+.movies-card__remove-button {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  width: 21px;
+  height: 21px;
+  border-radius: 50px;
+  background-image: url(../../images/card_saved.svg);
+  border: none;
+  cursor: pointer;
+}
+
+@media screen and (max-width: 1000px) {
+  .movies-card__image {
+    width: 339px;
+    height: 190px;
+  }
+
+  .movies-card__container {
+    height: auto;
+    margin: 25px 0 0;
+  }
+
+  .movies-card__caption {
+    text-overflow: ellipsis;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .movies-card__image {
+    width: 300px;
+    height: 188px;
+  }
+
+  .movies-card__container {
+    margin: 16px 0 0;
+  }
+
+  .movies-card__caption {
+    width: 240px;
+  }
 }

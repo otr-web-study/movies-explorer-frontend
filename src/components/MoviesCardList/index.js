@@ -3,9 +3,11 @@ import MoviesCard from '../MoviesCard';
 
 function MoviesCardList({ cards }) {
   const cardsElement = cards.map(item => {
+    const isSaved = item.id % 4 === 0;
+
     return (
       <li key={item.id}>
-        <MoviesCard card={item} />
+        <MoviesCard card={item} isSaved={isSaved} />
       </li>
     )});
 

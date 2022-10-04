@@ -1,3 +1,21 @@
 .movies {
   background-color: #202020;
 }
+
+.movies__button-more {
+  margin: 50px auto 80px;
+  width: 320px;
+  height: 36px;
+  background-color: #2F2F2F;
+  font-size: 12px;
+  line-height: 15px;
+  font-weight: 500;
+  color: white;
+  border: none;
+}
+
+@media screen and (max-width: 767px) {
+  .movies__button-more {
+    width: 240px;
+  }
+}
