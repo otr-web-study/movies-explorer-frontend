@@ -3,7 +3,7 @@ import { formatTime } from '../../utils/formatTime';
 import ExternalLink from '../ExternalLink';
 import Button from '../Button';
 
-function MoviesCard({ card, isSaved, onClick }) {
+function MoviesCard({ card, isSaved, isSavedPage, onClick }) {
   const { duration, image, nameRU, trailerLink } = card;
 
   const handleSaveButtonClick = () => {
@@ -19,9 +19,9 @@ function MoviesCard({ card, isSaved, onClick }) {
           className='movies-card__image'>
         </img>
       </ExternalLink>
-      {isSaved ?
+      {isSaved || isSavedPage ?
         <Button
-          className='movies-card__remove-button'
+          className={`movies-card__remove-button ${isSavedPage && 'movies-card__remove-button_type_saved-page'}`}
           onClick={handleSaveButtonClick} />:
         <Button
           className='movies-card__save-button'

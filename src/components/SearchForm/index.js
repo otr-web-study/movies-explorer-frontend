@@ -4,7 +4,7 @@ import InputError from '../InputError';
 import FilterCheckbox from '../FilterCheckbox';
 import { useInputRefWithValidation, useFormValid } from '../../utils/formValidators';
 
-function SearchForm() {
+function SearchForm({ onSubmit }) {
   const searchString = useInputRefWithValidation('');
   const [isFormValid] = useFormValid([searchString]);
 
@@ -15,6 +15,7 @@ function SearchForm() {
     if (!isFormValid) {
       return;
     }
+    onSubmit(searchString);
   }
 
   return (

@@ -74,8 +74,14 @@
   height: 21px;
   border-radius: 50px;
   background-image: url(../../images/card_saved.svg);
+  background-color: #EE3465;
   border: none;
   cursor: pointer;
+}
+
+.movies-card__remove-button_type_saved-page{
+  background-image: url(../../images/card_delete.svg);
+  background-color: #313131;
 }
 
 @media screen and (max-width: 1000px) {
@@ -85,12 +91,13 @@
   }
 
   .movies-card__container {
-    height: auto;
     margin: 25px 0 0;
   }
 
   .movies-card__caption {
     text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
   }
 }
 

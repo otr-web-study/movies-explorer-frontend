@@ -1,9 +1,9 @@
 import './Logo.css';
 import Link from '../Link';
 
-function Logo() {
+function Logo({className=''}) {
   return (
-    <Link href='/' className='link logo' />
+    <Link href='/' className={`link logo ${className}`} />
   )
 }
 
