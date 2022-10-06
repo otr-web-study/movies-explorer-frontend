@@ -1,7 +1,8 @@
 import './AuthForm.css';
-import Logo from '../../components/Logo';
+import LinkComponent from '../../components/Link';
+import Button from '../../components/Button';
 
-function AuthForm({name, title, children, onSubmit}) {
+function AuthForm({name, children, onSubmit, submitTitle, caption, href, linkTitle, isValid}) {
   const handleSubmit = (evt) => {
     evt.preventDefault();
     onSubmit();
@@ -14,11 +15,24 @@ function AuthForm({name, title, children, onSubmit}) {
       name={name}
       id={name}
       noValidate>
-      <Logo className='auth-form__logo' />
-      <h1 className='auth-form__title'>
-        {title}
-      </h1>
-      {children}
+      <div className='auth-form__elements'>
+        {children}
+      </div>
+      <div className='auth-form__footer'>
+        <Button
+          className={`auth-form__button-submit ${!isValid && 'auth-form__button-submit_inactive'}`}
+          title={submitTitle}
+          type='submit'
+          disabled={!isValid} />
+        <div className='auth-form__container'>
+          <p className='auth-form_text'>
+            {caption}
+          </p>
+          <LinkComponent href={href} className='link auth-form__link'>
+            {linkTitle}
+          </LinkComponent>
+        </div>
+      </div>
     </form>
   );
 }

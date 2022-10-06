@@ -1,4 +1,4 @@
-.register {
+.login {
   display: flex;
   flex-direction: column;
   width: 396px;
@@ -7,7 +7,7 @@
 }
 
 @media screen and (max-width: 500px) {
-  .register {
+  .login {
     width: 260px;
   }
 }

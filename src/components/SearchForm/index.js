@@ -32,6 +32,7 @@ function SearchForm({ onSubmit }) {
           className='search-form__input'
           placeholder='Фильм'
           required
+          autoComplete='off'
           name='search'
           id='search' />
         <Button className='search-form__button-submit' />

@@ -35,17 +35,19 @@ function Movies() {
   useEffect(() => handleSearchButtonClick('tst'), [])
 
   return (
-    <Container className='container page__container'>
-      <Header loggedIn={true} />
-      <section className='movies'>
-        <SearchForm onSubmit={handleSearchButtonClick} />
-        <MoviesCardList cards={cards} />
-        {isMoreMovies && <Button 
-          title='Ещё' 
-          className='movies__button-more'
-          onClick={handleMoreButtonClick} />}
-        {isPending && <Preloader />}
-      </section>
+    <Container className='container page__container container__movies'>
+      <div>
+        <Header loggedIn={true} />
+        <section className='movies'>
+          <SearchForm onSubmit={handleSearchButtonClick} />
+          <MoviesCardList cards={cards} />
+          {isMoreMovies && <Button 
+            title='Ещё' 
+            className='movies__button-more'
+            onClick={handleMoreButtonClick} />}
+          {isPending && <Preloader />}
+        </section>
+      </div>
       <Footer />
     </Container>
   );

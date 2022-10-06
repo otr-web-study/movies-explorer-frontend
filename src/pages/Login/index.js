@@ -1,16 +1,15 @@
-import './Register.css';
+import './Login.css';
 import Container from '../../components/Container';
 import InputError from '../../components/InputError';
 import AuthForm from '../../components/AuthForm';
 import { useInputWithValidation, useFormValid } from '../../utils/formValidators';
 import Logo from '../../components/Logo';
 
-function Register({onSubmit}) {
-  const name = useInputWithValidation('');
+function Login({onSubmit}) {
   const email = useInputWithValidation('');
   const password = useInputWithValidation('');
 
-  const [isFormValid] = useFormValid([name, email, password]);
+  const [isFormValid] = useFormValid([email, password]);
 
   return (
     <Container className='container page__container'>
@@ -19,30 +18,16 @@ function Register({onSubmit}) {
           onSubmit={onSubmit}
           name='registerForm'
           id='registerForm'
-          submitTitle='Зарегистрироваться'
-          caption='Уже зарегистрированы?'
-          href='/signin'
-          linkTitle='Войти'
+          submitTitle='Войти'
+          caption='Ещё не зарегистрированы?'
+          href='/signup'
+          linkTitle='Регистрация'
           isValid={isFormValid}>
           <div className='auth-form__elements'>
             <Logo className='auth-form__logo' />
             <h1 className='auth-form__title'>
-              Добро пожаловать!
+              Рады видеть!
             </h1>
-            <label className='auth-form__label'>
-              Имя
-            </label>
-            <input
-              value={name.value}
-              onChange={name.onChange}
-              className='auth-form__input'
-              required
-              autoComplete='off'
-              name='name'
-              id='name' />
-            <InputError 
-              isValid={name.isValid}
-              errorMessage={name.validationMessage} />
             <label className='auth-form__label'>
               E-mail
             </label>
@@ -79,4 +64,4 @@ function Register({onSubmit}) {
   );
 }
 
-export default Register;
+export default Login;

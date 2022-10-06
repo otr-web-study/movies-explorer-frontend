@@ -8,7 +8,6 @@
   row-gap: 57px;
   justify-content: center;
   list-style-type: none;
-  min-height: 44vh;
 }
 
 @media screen and (max-width: 1000px) {
@@ -16,7 +15,6 @@
     padding: 70px 30px 10px;
     grid-template-columns: repeat(auto-fit, 339px);
     row-gap: 45px;
-    min-height: 43vh;
   }
 }
 
@@ -25,6 +23,5 @@
     padding: 40px 10px 10px;
     grid-template-columns: repeat(auto-fit, 300px);
     row-gap: 36px;
-    min-height: 34vh;
   }
 }

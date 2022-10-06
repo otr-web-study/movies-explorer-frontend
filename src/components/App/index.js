@@ -4,6 +4,9 @@ import Main from '../../pages/Main';
 import Movies from '../../pages/Movies';
 import MoviesSaved from '../../pages/SavedMovies';
 import Register from '../../pages/Register';
+import Login from '../../pages/Login';
+import Profile from '../../pages/Profile';
+import NotFound from '../../pages/NotFound';
 
 function App() {
   return (
@@ -20,6 +23,15 @@ function App() {
         </Route>
         <Route path='/signup'>
           <Register />
+        </Route>
+        <Route path='/signin'>
+          <Login />
+        </Route>
+        <Route path='/profile'>
+          <Profile />
+        </Route>
+        <Route path='*'>
+          <NotFound />
         </Route>
       </Switch>
     </div>

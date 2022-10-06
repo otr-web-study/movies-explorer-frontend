@@ -14,12 +14,14 @@ function MoviesSaved() {
   const handleSearchButtonClick = (searchString) => console.log(searchString)
 
   return (
-    <Container className='container page__container'>
-      <Header loggedIn={true} />
-      <section className='saved-movies'>
-        <SearchForm onSubmit={handleSearchButtonClick} />
-        <MoviesCardList cards={cards} isSavedPage={true} />
-      </section>
+    <Container className='container page__container container__saved-movies'>
+      <div>
+        <Header loggedIn={true} />
+        <section className='saved-movies'>
+          <SearchForm onSubmit={handleSearchButtonClick} />
+          <MoviesCardList cards={cards} isSavedPage={true} />
+        </section>
+      </div>
       <Footer />
     </Container>
   );

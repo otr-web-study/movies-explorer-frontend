@@ -1,10 +1,18 @@
 .container {
   width: 100%;
   max-width: 1280px;
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
-  justify-content: center;
   position: relative;
+}
+
+.container__movies {
+  justify-content: space-between;
+}
+
+.container__saved-movies {
+  justify-content: space-between;
 }
 
 @media screen and (max-width: 1279px) {

@@ -1,15 +1,16 @@
 import './Button.css';
 
-function Button({ className, title, onClick, type }) {
+function Button({ className='', title, onClick, type, disabled }) {
   const handleClick = () => {
     onClick && onClick();
   }
 
   return (
     <button 
-      className={`button ${className || ''}`}
+      className={`button ${className}`}
       onClick={handleClick}
-      type={type}>
+      type={type}
+      disabled={disabled}>
       {title}
     </button>
   );
