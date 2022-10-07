@@ -1,4 +1,5 @@
-import { Route, Switch } from 'react-router-dom'
+import { Route, Switch } from 'react-router-dom';
+
 import './App.css';
 import Main from '../../pages/Main';
 import Movies from '../../pages/Movies';
@@ -7,6 +8,7 @@ import Register from '../../pages/Register';
 import Login from '../../pages/Login';
 import Profile from '../../pages/Profile';
 import NotFound from '../../pages/NotFound';
+import InfoTooltip from '../InfoTooltip';
 
 function App() {
   return (
@@ -34,6 +36,10 @@ function App() {
           <NotFound />
         </Route>
       </Switch>
+      <InfoTooltip
+        isOpen={false}
+        onClose={()=>console.log('hello')}
+        message="Hi, I'm an error message" />
     </div>
   )
 }

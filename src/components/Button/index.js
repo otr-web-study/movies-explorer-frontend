@@ -1,6 +1,6 @@
 import './Button.css';
 
-function Button({ className='', title, onClick, type, disabled }) {
+function Button({className='', title, onClick, type, disabled, ariaLabel}) {
   const handleClick = () => {
     onClick && onClick();
   }
@@ -10,7 +10,8 @@ function Button({ className='', title, onClick, type, disabled }) {
       className={`button ${className}`}
       onClick={handleClick}
       type={type}
-      disabled={disabled}>
+      disabled={disabled}
+      aria-label={ariaLabel}>
       {title}
     </button>
   );

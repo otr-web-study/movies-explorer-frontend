@@ -36,6 +36,7 @@ function Profile({onSubmit, onLogout}) {
             required
             autoComplete='off'
             name='name'
+            placeholder='Имя'
             id='name'></input>
         </label>
         <InputError
@@ -52,6 +53,7 @@ function Profile({onSubmit, onLogout}) {
             autoComplete='off'
             type='email'
             name='email'
+            placeholder='E-mail'
             id='email'></input>
         </label>
         <InputError
