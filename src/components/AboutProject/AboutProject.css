@@ -13,6 +13,7 @@
 .about-project__table {
   display: flex;
   justify-content: space-between;
+  gap: 40px;
   list-style-type: none;
   margin: 70px 0 0;
   padding: 0;
@@ -70,6 +71,10 @@
     padding: 90px 50px;
   }
 
+  .about-project__table {
+    gap: 30px;
+  }
+
   .about-project__text {
     margin-top: 22px;
     font-size: 12px;
@@ -89,6 +94,7 @@
   .about-project__table {
     flex-direction: column;
     margin-top: 4px;
+    gap: 0;
   }
 
   .about-project__heading {

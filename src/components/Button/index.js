@@ -1,6 +1,6 @@
 import './Button.css';
 
-function Button({className='', title, onClick, type, disabled, ariaLabel}) {
+function Button({className='', title, onClick, type='button', disabled, ariaLabel}) {
   const handleClick = () => {
     onClick && onClick();
   }

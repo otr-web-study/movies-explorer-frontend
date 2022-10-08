@@ -1,5 +1,5 @@
-import './Navigation.css';
 import Link from '../Link';
+import './Navigation.css';
 
 function Navigation() {
   return (

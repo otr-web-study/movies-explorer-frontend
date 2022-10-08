@@ -1,6 +1,6 @@
 import './FilterCheckbox.css';
 
-function FilterCheckbox({ title, onClick }) {
+function FilterCheckbox({ title='', onClick }) {
   const handleClick = () => {
     onClick && onClick();
   }
@@ -11,7 +11,7 @@ function FilterCheckbox({ title, onClick }) {
         <input type='checkbox' className='filter-checkbox__input'></input>
         <span className='filter-checkbox__slider'></span>
       </label>
-      <span className='filter-checkbox__title'>{title || ''}</span>
+      <span className='filter-checkbox__title'>{title}</span>
     </div>
   );
 }
