@@ -1,0 +1,29 @@
+.navigation-ext {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.navigation-ext__link {
+  display: inline-flex;
+  align-items: center;
+  gap: 13px;
+  font-size: 12px;
+  line-height: 16px;
+  font-weight: 400;
+}
+
+.navigation-ext__link_active {
+  font-weight: 500;
+}
+
+.navigation-ext__link_type_avatar {
+  font-weight: 500;
+  padding-left: 30px;
+}
+
+@media screen and (max-width: 1279px) {
+  .navigation-ext {
+    display: none;
+  }
+}

@@ -1,0 +1,27 @@
+.card-list {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 70px 70px 26px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, 360px);
+  column-gap: 30px;
+  row-gap: 57px;
+  justify-content: center;
+  list-style-type: none;
+}
+
+@media screen and (max-width: 1000px) {
+  .card-list {
+    padding: 70px 30px 10px;
+    grid-template-columns: repeat(auto-fit, 339px);
+    row-gap: 45px;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .card-list {
+    padding: 40px 10px 10px;
+    grid-template-columns: repeat(auto-fit, 300px);
+    row-gap: 36px;
+  }
+}

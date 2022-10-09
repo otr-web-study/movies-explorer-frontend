@@ -1,0 +1,32 @@
+.navigation {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+}
+
+.navigation__link {
+  font-size: 12px;
+  line-height: 16px;
+  font-weight: 500;
+}
+
+.navigation__link_accented {
+  color: black;
+  padding: 8px 20.2px;
+  background-color: #3DDC84;
+  border-radius: 3px;
+}
+
+@media screen and (max-width: 767px) {
+  .navigation {
+    gap: 14px;
+  }
+
+  .navigation__link {
+    font-size: 10px;
+  }
+
+  .navigation__link_accented {
+    padding: 5px 12px;
+  }
+}

@@ -1,0 +1,126 @@
+.about-project {
+  box-sizing: border-box;
+  padding: 110px 70px;
+  background-color: #202020;
+  display: flex;
+  flex-direction: column;
+}
+
+.about-project__title {
+  margin: 0;
+}
+
+.about-project__table {
+  display: flex;
+  justify-content: space-between;
+  gap: 40px;
+  list-style-type: none;
+  margin: 70px 0 0;
+  padding: 0;
+}
+
+.about-project__heading {
+  padding: 0;
+  margin: 0;
+  font-size: 20px;
+  line-height: 24px;
+  font-weight: 400;
+  letter-spacing: -.04em;
+}
+
+.about-project__text {
+  margin: 26px 0 0;
+  padding: 0;
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 400;
+}
+
+.about-project__timeline {
+  margin-top: 110px;
+  display: grid;
+  grid-template-columns: 1fr 4fr;
+  row-gap: 14px;
+  text-align: center;
+}
+
+.about-project__time-text {
+  margin: 0;
+  padding: 9px 0;
+  font-size: 14px;
+  line-height: 17px;
+  font-weight: 400;
+  background-color: #303030;
+}
+
+.about-project__time-text_accented {
+  background-color: #3DDC84;
+  color: black;
+}
+
+.about-project__time-caption {
+  margin: 0;
+  font-size: 14px;
+  line-height: 17px;
+  font-weight: 500;
+  color: #8B8B8B;
+}
+
+@media screen and (max-width: 1279px) {
+  .about-project {
+    padding: 90px 50px;
+  }
+
+  .about-project__table {
+    gap: 30px;
+  }
+
+  .about-project__text {
+    margin-top: 22px;
+    font-size: 12px;
+    line-height: 18px;
+  }
+
+  .about-project__timeline {
+    margin-top: 93px;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .about-project {
+    padding: 70px 18px;
+  }
+
+  .about-project__table {
+    flex-direction: column;
+    margin-top: 4px;
+    gap: 0;
+  }
+
+  .about-project__heading {
+    margin-top: 56px;
+    font-size: 18px;
+    line-height: 22px;
+  }
+
+  .about-project__text {
+    margin-top: 16px;
+    font-size: 11px;
+    line-height: 16px;
+  }
+
+  .about-project__timeline {
+    margin-top: 60px;
+  }
+
+  .about-project__time-text {
+    font-size: 11px;
+    line-height: 13px;
+    padding: 11px 0;
+  }
+
+  .about-project__time-caption {
+    font-size: 11px;
+    line-height: 13px;
+  }
+}

@@ -1,0 +1,10 @@
+.external-link {
+  cursor: pointer;
+  color: white;
+  text-decoration: none;
+  transition: opacity .2s;
+}
+
+.external-link:hover {
+  opacity: .7;
+}
