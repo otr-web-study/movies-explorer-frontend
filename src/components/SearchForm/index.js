@@ -35,7 +35,9 @@ function SearchForm({ onSubmit }) {
           autoComplete='off'
           name='search'
           id='search' />
-        <Button className='search-form__button-submit' />
+        <Button 
+          className='search-form__button-submit'
+          type='submit' />
         <InputError 
           className='search-form__error'
           isValid={searchString.isValid}
