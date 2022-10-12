@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 import './InfoTooltip.css';
 import Button from '../Button';
 
-function InfoTooltip({isOpen, onClose, message}) {
+function InfoTooltip({message, onClose}) {
   const ESC_KEY = 'Escape';
 
   useEffect(() => {
@@ -28,7 +28,7 @@ function InfoTooltip({isOpen, onClose, message}) {
 
   return (
     <div 
-      className={`info-tooltip ${isOpen && 'info-tooltip_opened'}`}
+      className={`info-tooltip ${message && 'info-tooltip_opened'}`}
       onMouseDown={handlePopupMouseDown}>
       <div className='info-tooltip__container'>
         <div className='info-tooltip__logo'></div>

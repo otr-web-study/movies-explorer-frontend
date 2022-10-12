@@ -2,20 +2,25 @@ import './Login.css';
 import Container from '../../components/Container';
 import InputError from '../../components/InputError';
 import AuthForm from '../../components/AuthForm';
+import Preloader from '../../components/Preloader/Preloader';
 import { useInputWithValidation, useFormValid } from '../../utils/formValidators';
 import Logo from '../../components/Logo';
 
-function Login({onSubmit}) {
+function Login({onSubmit, isPending}) {
   const email = useInputWithValidation('');
   const password = useInputWithValidation('');
 
   const [isFormValid] = useFormValid([email, password]);
 
+  const handleSubmit = () => {
+    onSubmit(email.value, password.value);
+  }
+
   return (
     <Container className='container page__container'>
       <section className='register'>
         <AuthForm
-          onSubmit={onSubmit}
+          onSubmit={handleSubmit}
           name='registerForm'
           id='registerForm'
           submitTitle='Войти'
@@ -60,6 +65,7 @@ function Login({onSubmit}) {
           </div>
         </AuthForm>
       </section>
+      {isPending && <Preloader />}
     </Container>
   );
 }

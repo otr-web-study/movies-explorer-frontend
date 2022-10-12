@@ -39,6 +39,14 @@ class Api {
       headers: {...this._headers, ...{'Authorization': `Bearer ${jwt}`}}
     }).then(this._handleResponse);
   }
+
+  updateUserData(userData) {
+    return fetch(`${this._baseUrl}/users/me`, {
+      method: 'PATCH',
+      headers: {...this._headers, ...{'Authorization': `Bearer ${localStorage.getItem('jwt')}`}},
+      body: JSON.stringify(userData),
+    });
+  }
 }
 
 const api = new Api({

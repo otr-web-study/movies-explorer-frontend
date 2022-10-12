@@ -30,14 +30,12 @@ function Movies() {
     }, 2000);
   }
 
-  console.log('render');
-
   useEffect(() => handleSearchButtonClick('tst'), [])
 
   return (
     <Container className='container page__container container__movies'>
       <div>
-        <Header loggedIn={true} />
+        <Header />
         <section className='movies'>
           <SearchForm onSubmit={handleSearchButtonClick} />
           <MoviesCardList cards={cards} />

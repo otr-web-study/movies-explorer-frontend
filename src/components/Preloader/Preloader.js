@@ -1,12 +1,12 @@
 import './Preloader.css'
 
-const Preloader = () => {
+const Preloader = ({isMain}) => {
   return (
-    <div className="preloader">
-      <div className="preloader__container">
-        <span className="preloader__round"></span>
+    <div className='preloader'>
+      <div className='preloader__container'>
+        <span className='preloader__round'></span>
       </div>
-      <div className='preloader__cover'></div>
+      <div className={`preloader__cover ${isMain && 'preloader__cover_type_main'}`}></div>
     </div>
   )
 };

@@ -3,9 +3,10 @@ import Container from '../../components/Container';
 import Header from '../../components/Header';
 import InputError from '../../components/InputError';
 import Button from '../../components/Button';
+import Preloader from '../../components/Preloader/Preloader';
 import { useInputWithValidation, useFormValid } from '../../utils/formValidators';
 
-function Profile({onSubmit, onLogout}) {
+function Profile({onSubmit, onLogout, isPending}) {
   const name = useInputWithValidation('');
   const email = useInputWithValidation('');
 
@@ -14,7 +15,7 @@ function Profile({onSubmit, onLogout}) {
   const handleSubmit = (evt) => {
     evt.preventDefault();
     
-    onSubmit();
+    onSubmit({name: name.value, email: email.value});
   }
 
   return (
@@ -69,6 +70,7 @@ function Profile({onSubmit, onLogout}) {
           className='profile__button-logout'
           title='Выйти из аккаунта'
           onClick={onLogout} />
+        {isPending && <Preloader />}
       </form>
     </Container>
   );

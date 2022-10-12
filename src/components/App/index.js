@@ -1,4 +1,4 @@
-import { Route, Switch } from 'react-router-dom';
+import { Route, Switch, useHistory, useLocation } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 
 import './App.css';
@@ -14,26 +14,44 @@ import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
 import { CurrentUser as CurrentUserContext } from '../../contexts/CurrentUser'
 import mainApi from '../../utils/MainApi';
 import moviesApi from '../../utils/MoviesApi'
-import { checkAndSetJWT, checkAndSetUserData } from '../../utils/utils';
+import { checkAndSetJWT, checkAndSetUserData, getErrorMessage } from '../../utils/utils';
 
 function App() {
   const [currentUser, setCurrentUser] = useState({});
-  const [isPendingServerResponse, setIsPendingServerResponse] = useState(false);
-  const [InfoTooltipData, setInfoTooltipData] = useState({});
+  const [isPendingServerResponse, setIsPendingServerResponse] = useState(true);
+  const [InfoTooltipMessage, setInfoTooltipMessage] = useState('');
+
+  const history = useHistory();
+  const location = useLocation();
 
   useEffect(() => {
+    const path = location.pathname;
+    console.log(path);
     const jwt = localStorage.getItem('jwt');
+
     if (jwt) {
       mainApi.getUserData(jwt)
         .then((data) => {
           if (data) {
             setCurrentUser(data);
-            history.push('/movies');
+            history.push(path);
           }
         })
-        .catch(err => {console.log(err)});
+        .catch(err => handleError(err))
+        .finally(() => setIsPendingServerResponse(false));
+    } else {
+      setIsPendingServerResponse(false);
     }
   }, []);
+
+  const handleError = (err) => {
+    console.log(err.text);
+    const message = getErrorMessage(err);
+
+    if (message) {
+      setInfoTooltipMessage(message);
+    }
+  }
 
   const handleRegister = (name, email, password) => {
     setIsPendingServerResponse(true);
@@ -46,7 +64,7 @@ function App() {
         checkAndSetUserData(userData, setCurrentUser);
         history.push('/movies');
       })
-      .catch(err => setInfoTooltipData({data: err}))
+      .catch(err => handleError(err))
       .finally(() => {setIsPendingServerResponse(false)});
   }
 
@@ -60,8 +78,12 @@ function App() {
         checkAndSetUserData(userData, setCurrentUser);
         history.push('/movies');
       })
-      .catch(err => setInfoTooltipData({data: err}))
+      .catch(err => handleError(err))
       .finally(() => {setIsPendingServerResponse(false)});
+  }
+
+  const handleChangeProfile = (userData) => {
+    console.log(userData);
   }
 
   const handleLogout = () => {
@@ -70,18 +92,27 @@ function App() {
     history.push('/');
   }
 
+  const handleCloseInfoTooltip = () => {
+    setInfoTooltipMessage('');
+  }
+
   return (
     <CurrentUserContext.Provider value={currentUser}>
       <div className='page'>
         <Switch>
           <Route exact path='/'>
-            <Main loggedIn={false} />
+            <Main isPending={isPendingServerResponse} />
           </Route>
-          <Route path='/signup'>
-            <Register />
+          <Route 
+            path='/signup'>
+            <Register
+              onSubmit={handleRegister}
+              isPending={isPendingServerResponse} />
           </Route>
           <Route path='/signin'>
-            <Login />
+            <Login
+              onSubmit={handleLogin}
+              isPending={isPendingServerResponse} />
           </Route>
           <ProtectedRoute
             path='/movies'
@@ -91,15 +122,17 @@ function App() {
             component={MoviesSaved} />
           <ProtectedRoute
             path='/profile'
-            component={Profile} />
+            component={Profile}
+            onSubmit={handleChangeProfile}
+            onLogout={handleLogout}
+            isPending={isPendingServerResponse} />
           <Route path='*'>
             <NotFound />
           </Route>
         </Switch>
         <InfoTooltip
-          isOpen={false}
-          onClose={()=>console.log('hello')}
-          message="Hi, I'm an error message" />
+          message={InfoTooltipMessage}
+          onClose={handleCloseInfoTooltip} />
       </div>
     </CurrentUserContext.Provider>
   )
