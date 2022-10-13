@@ -9,3 +9,7 @@ export const USER_FRIENDLY_ERRORS = {
 }
 export const MESSAGE_EMPTY_TOKEN = 'Сервер вернул пустой токен.';
 export const MESSAGE_EMPTY_USER_DATA = 'Ответ сервера не содержит данные пользователя.';
+export const MESSAGE_USER_DATA_UPDATED = 'Данные пользователя успешно обновлены.';
+export const ESC_KEY = 'Escape';
+export const ENTER_KEY = 'Enter';
+export const DURATION_SHORT_MOVIE = 40 * 60;

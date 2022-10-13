@@ -7,7 +7,7 @@
   right: 0;
   visibility: hidden;
   opacity: 0;
-  transition: visibility 0.2s, opacity 0.2s linear;
+  transition: visibility 0.1s, opacity 0.2s linear;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -73,10 +73,19 @@
 }
 
 .info-tooltip__logo {
-  background-image: url(../../images/error-logo.svg);
   object-fit: cover;
   width: 38px;
   height: 38px;
+  transition: background .1s linear;
+}
+
+.info-tooltip__logo_type_fail {
+  background-image: url(../../images/error-logo.svg);
+  transition-delay: 1s;
+}
+
+.info-tooltip__logo_type_success {
+  background-image: url(../../images/success_logo.svg);
 }
 
 .info-tooltip__title {

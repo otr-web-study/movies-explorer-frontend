@@ -1,11 +1,13 @@
+import { useState } from 'react';
 import './SearchForm.css';
 import Button from '../Button';
 import InputError from '../InputError';
 import FilterCheckbox from '../FilterCheckbox';
 import { useInputRefWithValidation, useFormValid } from '../../utils/formValidators';
 
-function SearchForm({ onSubmit }) {
-  const searchString = useInputRefWithValidation('');
+function SearchForm({ onSubmit, engine }) {
+  const searchString = useInputRefWithValidation(engine.getSearchString());
+  const [onlyShort, setOnlyShort] = useState(engine.getOnlyShort());
   const [isFormValid] = useFormValid([searchString]);
 
   const handleSubmit = (evt) => {
@@ -15,7 +17,14 @@ function SearchForm({ onSubmit }) {
     if (!isFormValid) {
       return;
     }
-    onSubmit(searchString);
+    onSubmit(searchString.ref.current.value, onlyShort);
+  }
+
+  const handleCheckboxChange = (value) => {
+    setOnlyShort(value);
+    if (searchString.ref.current.value) {
+      onSubmit(searchString.ref.current.value, onlyShort);
+    }
   }
 
   return (
@@ -43,7 +52,10 @@ function SearchForm({ onSubmit }) {
           isValid={searchString.isValid}
           errorMessage={searchString.validationMessage} />
       </div>
-      <FilterCheckbox title='Короткометражки' />
+      <FilterCheckbox 
+        title='Короткометражки'
+        onChange={handleCheckboxChange}
+        value={onlyShort} />
       <div className='search-form__underline'></div>
     </form>
   );

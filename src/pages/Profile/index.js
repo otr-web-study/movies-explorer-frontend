@@ -1,20 +1,28 @@
+import { useContext, useEffect } from 'react';
 import './Profile.css';
 import Container from '../../components/Container';
 import Header from '../../components/Header';
 import InputError from '../../components/InputError';
 import Button from '../../components/Button';
 import Preloader from '../../components/Preloader/Preloader';
+import { CurrentUser } from '../../contexts/CurrentUser';
 import { useInputWithValidation, useFormValid } from '../../utils/formValidators';
 
 function Profile({onSubmit, onLogout, isPending}) {
   const name = useInputWithValidation('');
   const email = useInputWithValidation('');
 
+  const currentUser = useContext(CurrentUser);
+
+  useEffect(() => {
+    name.setValue(currentUser.name || '');
+    email.setValue(currentUser.email || '');
+  }, [currentUser]);
+
   const [isFormValid] = useFormValid([name, email]);
 
   const handleSubmit = (evt) => {
     evt.preventDefault();
-    
     onSubmit({name: name.value, email: email.value});
   }
 
@@ -27,7 +35,7 @@ function Profile({onSubmit, onLogout, isPending}) {
         name='profile'
         id='profile'
         noValidate>
-        <h1 className='profile__title'>Привет, Виталий!</h1>
+        <h1 className='profile__title'>{`Привет, ${currentUser.name}!`}</h1>
         <label className='profile__label'>
           Имя
           <input

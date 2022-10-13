@@ -13,16 +13,22 @@ import InfoTooltip from '../InfoTooltip';
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
 import { CurrentUser as CurrentUserContext } from '../../contexts/CurrentUser'
 import mainApi from '../../utils/MainApi';
-import moviesApi from '../../utils/MoviesApi'
+import moviesApi from '../../utils/MoviesApi';
 import { checkAndSetJWT, checkAndSetUserData, getErrorMessage } from '../../utils/utils';
+import { MESSAGE_USER_DATA_UPDATED } from '../../constants/constants';
+import MoviesEngine from '../../utils/MoviesEngine';
 
 function App() {
   const [currentUser, setCurrentUser] = useState({});
   const [isPendingServerResponse, setIsPendingServerResponse] = useState(true);
-  const [InfoTooltipMessage, setInfoTooltipMessage] = useState('');
+  const [InfoTooltipData, setInfoTooltipData] = useState({});
+  const [movies, setMovies] = useState([]);
+  const [savedMovies, setSavedMovies] = useState([]);
 
   const history = useHistory();
   const location = useLocation();
+
+  const engine = new MoviesEngine(movies, savedMovies, setMovies, setSavedMovies);
 
   useEffect(() => {
     const path = location.pathname;
@@ -45,11 +51,10 @@ function App() {
   }, []);
 
   const handleError = (err) => {
-    console.log(err.text);
     const message = getErrorMessage(err);
 
     if (message) {
-      setInfoTooltipMessage(message);
+      setInfoTooltipData({message});
     }
   }
 
@@ -65,7 +70,7 @@ function App() {
         history.push('/movies');
       })
       .catch(err => handleError(err))
-      .finally(() => {setIsPendingServerResponse(false)});
+      .finally(() => setIsPendingServerResponse(false));
   }
 
   const handleLogin = (email, password) => {
@@ -79,11 +84,19 @@ function App() {
         history.push('/movies');
       })
       .catch(err => handleError(err))
-      .finally(() => {setIsPendingServerResponse(false)});
+      .finally(() => setIsPendingServerResponse(false));
   }
 
   const handleChangeProfile = (userData) => {
-    console.log(userData);
+    setIsPendingServerResponse(true);
+
+    mainApi.updateUserData(userData)
+      .then((newUserData) => {
+        checkAndSetUserData(newUserData, setCurrentUser);
+        setInfoTooltipData({message: MESSAGE_USER_DATA_UPDATED, isSuccess: true});
+      })
+      .catch(err => handleError(err))
+      .finally(() => setIsPendingServerResponse(false));
   }
 
   const handleLogout = () => {
@@ -93,7 +106,19 @@ function App() {
   }
 
   const handleCloseInfoTooltip = () => {
-    setInfoTooltipMessage('');
+    setInfoTooltipData({});
+  }
+
+  const handleSearchMovies = (searchString, onlyShort) => {
+    if (engine.isDataReceived()) {
+      return engine.searchMovies(searchString, onlyShort);
+    }
+    setIsPendingServerResponse(true);
+    return Promise.all([mainApi.getMovies(), moviesApi.getMovies()])
+      .then(([savedMovies, movies]) => engine.loadData(savedMovies, movies))
+      .then(() => engine.searchMovies(searchString, onlyShort))
+      .catch(err => handleError(err))
+      .finally(() => setIsPendingServerResponse(false));
   }
 
   return (
@@ -116,7 +141,10 @@ function App() {
           </Route>
           <ProtectedRoute
             path='/movies'
-            component={Movies} />
+            component={Movies}
+            engine={engine}
+            onSearch={handleSearchMovies}
+            isPending={isPendingServerResponse} />
           <ProtectedRoute
             path='/saved-movies'
             component={MoviesSaved} />
@@ -131,7 +159,7 @@ function App() {
           </Route>
         </Switch>
         <InfoTooltip
-          message={InfoTooltipMessage}
+          data={InfoTooltipData}
           onClose={handleCloseInfoTooltip} />
       </div>
     </CurrentUserContext.Provider>

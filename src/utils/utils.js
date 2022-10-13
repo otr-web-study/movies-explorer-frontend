@@ -25,5 +25,6 @@ export const getErrorMessage = (err) => {
     return String(err);
   }
 
+  console.log(err.text);
   return USER_FRIENDLY_ERRORS[err.status];
 }

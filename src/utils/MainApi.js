@@ -45,7 +45,28 @@ class Api {
       method: 'PATCH',
       headers: {...this._headers, ...{'Authorization': `Bearer ${localStorage.getItem('jwt')}`}},
       body: JSON.stringify(userData),
-    });
+    }).then(this._handleResponse);
+  }
+
+  getMovies() {
+    return fetch(`${this._baseUrl}/movies`, {
+      headers: {...this._headers, ...{'Authorization': `Bearer ${localStorage.getItem('jwt')}`}},
+    }).then(this._handleResponse);
+  }
+
+  createMovie(data) {
+    return fetch(`${this._baseUrl}/movies`, {
+      method: 'POST',
+      headers: {...this._headers, ...{'Authorization': `Bearer ${localStorage.getItem('jwt')}`}},
+      body: JSON.stringify(data),
+    }).then(this._handleResponse);
+  }
+
+  deleteMovie(id) {
+    return fetch(`${this._baseUrl}/movies/${id}`, {
+      method: 'DELETE',
+      headers: {...this._headers, ...{'Authorization': `Bearer ${localStorage.getItem('jwt')}`}},
+    }).then(this._handleResponse);
   }
 }
 
