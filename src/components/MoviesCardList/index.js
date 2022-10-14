@@ -1,9 +1,9 @@
 import './MoviesCardList.css';
 import MoviesCard from '../MoviesCard';
 
-function MoviesCardList({ cards, isSavedPage }) {
-  const cardsElement = cards.map(item => {
-    const isSaved = item.id % 4 === 0;
+function MoviesCardList({ movies, engine, isSavedPage }) {
+  const cardsElement = movies.map(item => {
+    const isSaved = engine.getIsMovieSaved(item.id);
 
     return (
       <li key={item.id}>

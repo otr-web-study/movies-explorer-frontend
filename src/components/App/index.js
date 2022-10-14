@@ -15,8 +15,8 @@ import { CurrentUser as CurrentUserContext } from '../../contexts/CurrentUser'
 import mainApi from '../../utils/MainApi';
 import moviesApi from '../../utils/MoviesApi';
 import { checkAndSetJWT, checkAndSetUserData, getErrorMessage } from '../../utils/utils';
-import { MESSAGE_USER_DATA_UPDATED } from '../../constants/constants';
-import MoviesEngine from '../../utils/MoviesEngine';
+import { MESSAGE_USER_DATA_UPDATED, MESSAGE_API_ERROR } from '../../constants/constants';
+import engine from '../../utils/MoviesEngine';
 
 function App() {
   const [currentUser, setCurrentUser] = useState({});
@@ -28,12 +28,11 @@ function App() {
   const history = useHistory();
   const location = useLocation();
 
-  const engine = new MoviesEngine(movies, savedMovies, setMovies, setSavedMovies);
-
   useEffect(() => {
     const path = location.pathname;
-    console.log(path);
     const jwt = localStorage.getItem('jwt');
+
+    engine.setLimitMovies(window.innerWidth);
 
     if (jwt) {
       mainApi.getUserData(jwt)
@@ -111,14 +110,20 @@ function App() {
 
   const handleSearchMovies = (searchString, onlyShort) => {
     if (engine.isDataReceived()) {
-      return engine.searchMovies(searchString, onlyShort);
+      setMovies(engine.searchMovies(searchString, onlyShort, handleError));
+    } else {
+      setIsPendingServerResponse(true);
+      Promise.all([mainApi.getMovies(), moviesApi.getMovies()])
+        .then(([savedMovies, movies]) => engine.loadData(savedMovies, movies))
+        .then(() => engine.searchMovies(searchString, onlyShort, handleError))
+        .then((newMovies) => setMovies(newMovies))
+        .catch(() => handleError(MESSAGE_API_ERROR))
+        .finally(() => setIsPendingServerResponse(false));
     }
-    setIsPendingServerResponse(true);
-    return Promise.all([mainApi.getMovies(), moviesApi.getMovies()])
-      .then(([savedMovies, movies]) => engine.loadData(savedMovies, movies))
-      .then(() => engine.searchMovies(searchString, onlyShort))
-      .catch(err => handleError(err))
-      .finally(() => setIsPendingServerResponse(false));
+  }
+
+  const handleMoreClick = () => {
+    setMovies([...movies, ...engine.getMoreMovies(movies.length)]);
   }
 
   return (
@@ -143,7 +148,9 @@ function App() {
             path='/movies'
             component={Movies}
             engine={engine}
+            movies={movies}
             onSearch={handleSearchMovies}
+            onMoreClick={handleMoreClick}
             isPending={isPendingServerResponse} />
           <ProtectedRoute
             path='/saved-movies'

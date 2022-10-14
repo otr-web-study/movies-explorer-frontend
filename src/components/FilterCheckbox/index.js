@@ -5,7 +5,7 @@ function FilterCheckbox({ title='', value, onChange }) {
     <div className='filter-checkbox'>
       <label className='filter-checkbox__switch'>
         <input 
-          value={value}
+          checked={value}
           onChange={onChange}
           type='checkbox'
           className='filter-checkbox__input'></input>

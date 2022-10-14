@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import './SearchForm.css';
 import Button from '../Button';
 import InputError from '../InputError';
@@ -6,9 +6,14 @@ import FilterCheckbox from '../FilterCheckbox';
 import { useInputRefWithValidation, useFormValid } from '../../utils/formValidators';
 
 function SearchForm({ onSubmit, engine }) {
-  const searchString = useInputRefWithValidation(engine.getSearchString());
-  const [onlyShort, setOnlyShort] = useState(engine.getOnlyShort());
+  const searchString = useInputRefWithValidation('');
+  const [onlyShort, setOnlyShort] = useState(false);
   const [isFormValid] = useFormValid([searchString]);
+
+  useEffect(() => {
+    searchString.ref.current.value = engine.getSearchMoviesString() || '';
+    setOnlyShort(engine.getOnlyShortMovies());
+  }, []);
 
   const handleSubmit = (evt) => {
     evt.preventDefault();
@@ -20,10 +25,11 @@ function SearchForm({ onSubmit, engine }) {
     onSubmit(searchString.ref.current.value, onlyShort);
   }
 
-  const handleCheckboxChange = (value) => {
+  const handleCheckboxChange = () => {
+    const value = !onlyShort;
     setOnlyShort(value);
     if (searchString.ref.current.value) {
-      onSubmit(searchString.ref.current.value, onlyShort);
+      onSubmit(searchString.ref.current.value, value);
     }
   }
 
