@@ -7,6 +7,7 @@ import Button from '../../components/Button';
 import Preloader from '../../components/Preloader/Preloader';
 import { CurrentUser } from '../../contexts/CurrentUser';
 import { useInputWithValidation, useFormValid } from '../../utils/formValidators';
+import { USERNAME_PATTERN } from '../../constants/constants';
 
 function Profile({onSubmit, onLogout, isPending}) {
   const name = useInputWithValidation('');
@@ -43,6 +44,9 @@ function Profile({onSubmit, onLogout, isPending}) {
             onChange={name.onChange}
             className='profile__input'
             required
+            minLength='2'
+            maxLength='30'
+            pattern={USERNAME_PATTERN}
             autoComplete='off'
             name='name'
             placeholder='Имя'

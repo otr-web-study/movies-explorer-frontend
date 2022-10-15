@@ -1,5 +1,6 @@
 export const MAIN_BASE_URL = 'http://localhost:3000';
 export const MOVIES_BASE_URL = 'https://api.nomoreparties.co/beatfilm-movies';
+export const IMAGE_BASE_URL = 'https://api.nomoreparties.co';
 export const USER_FRIENDLY_ERRORS = {
   400: 'Ошибка валидации на сервере',
   401: 'Вы ввели неправильный логин или пароль.',
@@ -14,6 +15,7 @@ export const MESSAGE_NOTHING_FOUND = 'Ничего не найдено.';
 export const MESSAGE_API_ERROR = 'Во время запроса произошла ошибка. '
                                  + 'Возможно, проблема с соединением '
                                  + 'или сервер недоступен. Подождите немного и попробуйте ещё раз';
+export const MESSAGE_NEED_KEYWORD = 'Нужно ввести ключевое слово.';
 export const ESC_KEY = 'Escape';
 export const ENTER_KEY = 'Enter';
 export const DURATION_SHORT_MOVIE = 40;
@@ -24,3 +26,4 @@ export const MOVIES_LIMIT = {
   MIDDLE: {COUNT: 8, MORE: 2},
   MOBILE: {COUNT: 5, MORE: 2},
 }
+export const USERNAME_PATTERN = '[A-Za-zА-Яа-я- ]+';

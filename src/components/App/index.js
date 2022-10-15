@@ -49,6 +49,17 @@ function App() {
     }
   }, []);
 
+  useEffect(() => {
+    if (currentUser._id) {
+      mainApi.getMovies()
+        .then((movies) => engine.loadSavedMovies(movies))
+        .then(() => setSavedMovies(engine.getSavedMovies()))
+    } else {
+      setSavedMovies([]);
+    }
+
+  }, [currentUser._id]);
+
   const handleError = (err) => {
     const message = getErrorMessage(err);
 
@@ -113,17 +124,42 @@ function App() {
       setMovies(engine.searchMovies(searchString, onlyShort, handleError));
     } else {
       setIsPendingServerResponse(true);
-      Promise.all([mainApi.getMovies(), moviesApi.getMovies()])
-        .then(([savedMovies, movies]) => engine.loadData(savedMovies, movies))
-        .then(() => engine.searchMovies(searchString, onlyShort, handleError))
-        .then((newMovies) => setMovies(newMovies))
+      moviesApi.getMovies()
+        .then((movies) => engine.loadMovies(movies))
+        .then(() => setMovies(engine.searchMovies(searchString, onlyShort, handleError)))
         .catch(() => handleError(MESSAGE_API_ERROR))
         .finally(() => setIsPendingServerResponse(false));
     }
   }
 
+  const handleSearchSavedMovies = (searchString, onlyShort) => {
+    setSavedMovies(engine.searchSavedMovies(searchString, onlyShort, handleError));
+  }
+
   const handleMoreClick = () => {
     setMovies([...movies, ...engine.getMoreMovies(movies.length)]);
+  }
+
+  const handleLikeClick = (card) => {
+    setIsPendingServerResponse(true);
+
+    mainApi.createMovie(engine.getNewMovieForSave(card))
+      .then((newSavedMovie) => engine.handleSaveMovie(newSavedMovie))
+      .then(() => setSavedMovies(engine.getSavedMovies()))
+      .catch((err) => handleError(err))
+      .finally(() => setIsPendingServerResponse(false));
+  }
+
+  const handleUnlikeClick = (card) => {
+    setIsPendingServerResponse(true);
+
+    const [id, movieId] = engine.getIdsForDelete(card);
+
+    mainApi.deleteMovie(id)
+      .then(() => engine.handleDeleteMovie(movieId))
+      .then(() => setSavedMovies(engine.getSavedMovies()))
+      .catch((err) => handleError(err))
+      .finally(() => setIsPendingServerResponse(false));
   }
 
   return (
@@ -151,10 +187,16 @@ function App() {
             movies={movies}
             onSearch={handleSearchMovies}
             onMoreClick={handleMoreClick}
+            onLikeClick={handleLikeClick}
+            onUnlikeClick={handleUnlikeClick}
             isPending={isPendingServerResponse} />
           <ProtectedRoute
             path='/saved-movies'
-            component={MoviesSaved} />
+            component={MoviesSaved}
+            engine={engine}
+            movies={savedMovies}
+            onSearch={handleSearchSavedMovies}
+            onUnlikeClick={handleUnlikeClick} />
           <ProtectedRoute
             path='/profile'
             component={Profile}

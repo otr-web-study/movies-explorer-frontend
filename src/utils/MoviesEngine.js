@@ -11,7 +11,7 @@ class MoviesEngine {
     this._movies = [];
     this._savedMovies = [];
     this._filteredMovies = [];
-    this._orderedSavedIDS = [];
+    this._savedIDS = [];
     this._searchMoviesString = '';
     this._onlyShortMovies = false;
     this._searchSavedMoviesString = '';
@@ -39,14 +39,17 @@ class MoviesEngine {
     return this._movies.length !== 0;
   }
 
-  loadData(savedMovies, movies) {
+  loadMovies(movies) {
     this._movies = movies;
+    return Promise.resolve();
+  }
+
+  loadSavedMovies(savedMovies) {
     this._savedMovies = savedMovies;
-    this._orderedSavedMovies = this._savedMovies.reduce((res, item) => {
+    this._savedIDS = this._savedMovies.reduce((res, item) => {
       res[item.movieId] = true;
       return res;
     }, [])
-    return Promise.resolve();
   }
 
   searchMovies(searchString, onlyShort, handleError) {
@@ -69,15 +72,23 @@ class MoviesEngine {
     return result
   }
 
+  getSavedMovies() {
+    return this._searchInCollection(this._savedMovies, this._searchSavedMoviesString, this._onlyShortSavedMovies);
+  }
+
   _searchInCollection(collection, searchString, onlyShort) {
     return collection.filter(item => {
-      return !onlyShort && 
-        (item.nameRU.toLowerCase().includes(searchString.toLowerCase()) ||
-        item.nameEN.toLowerCase().includes(searchString.toLowerCase())) ||
-        onlyShort && item.duration <= DURATION_SHORT_MOVIE &&
-        (item.nameRU.toLowerCase().includes(searchString.toLowerCase()) ||
-        item.nameEN.toLowerCase().includes(searchString.toLowerCase()));
+      return this._isMovieMatched(item, searchString, onlyShort);
     });
+  }
+
+  _isMovieMatched(movie, searchString, onlyShort) {
+    return !onlyShort && 
+      (movie.nameRU.toLowerCase().includes(searchString.toLowerCase()) ||
+      movie.nameEN.toLowerCase().includes(searchString.toLowerCase())) ||
+      onlyShort && movie.duration <= DURATION_SHORT_MOVIE &&
+      (movie.nameRU.toLowerCase().includes(searchString.toLowerCase()) ||
+      movie.nameEN.toLowerCase().includes(searchString.toLowerCase()));
   }
 
   getMoreMovies(currentCount) {
@@ -105,7 +116,42 @@ class MoviesEngine {
   }
 
   getIsMovieSaved(id) {
-    return this._orderedSavedIDS[id];
+    return this._savedIDS[id];
+  }
+
+  getIdsForDelete(card) {
+    if (card._id && card.movieId) {
+      return [card._id, card.movieId];
+    }
+
+    const savedCard = this._savedMovies.find(item => item.movieId === card.id);
+    return [savedCard._id, savedCard.movieId];
+  }
+
+  handleDeleteMovie(id) {
+    this._savedIDS[id] = false;
+    this._savedMovies = this._savedMovies.filter(item => item.movieId !== id);
+  }
+
+  getNewMovieForSave(movie) {
+    return {
+      country: movie.country,
+      director: movie.director,
+      duration: movie.duration,
+      year: movie.year,
+      description: movie.description,
+      image: movie.image.url,
+      trailerLink: movie.trailerLink,
+      thumbnail: movie.image.formats.thumbnail.url,
+      nameRU: movie.nameRU,
+      nameEN: movie.nameEN,
+      movieId: movie.id,
+    };
+  }
+
+  handleSaveMovie(newMovie) {
+    this._savedMovies.push(newMovie);
+    this._savedIDS[newMovie.movieId] = true;
   }
 }
 

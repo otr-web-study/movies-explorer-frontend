@@ -5,6 +5,7 @@ import AuthForm from '../../components/AuthForm';
 import { useInputWithValidation, useFormValid } from '../../utils/formValidators';
 import Logo from '../../components/Logo';
 import Preloader from '../../components/Preloader/Preloader';
+import { USERNAME_PATTERN } from '../../constants/constants';
 
 function Register({onSubmit, isPending}) {
   const name = useInputWithValidation('');
@@ -42,6 +43,9 @@ function Register({onSubmit, isPending}) {
               onChange={name.onChange}
               className='auth-form__input'
               required
+              minLength='2'
+              maxLength='30'
+              pattern={USERNAME_PATTERN}
               autoComplete='off'
               name='name'
               id='name' />

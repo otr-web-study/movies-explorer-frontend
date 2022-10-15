@@ -2,19 +2,24 @@ import './MoviesCard.css';
 import { formatTime } from '../../utils/formatTime';
 import ExternalLink from '../ExternalLink';
 import Button from '../Button';
+import { IMAGE_BASE_URL } from '../../constants/constants';
 
-function MoviesCard({ card, isSaved, isSavedPage, onClick }) {
+function MoviesCard({ card, isSaved, isSavedPage, onLikeClick, onUnlikeClick }) {
   const { duration, image, nameRU, trailerLink } = card;
 
-  const handleSaveButtonClick = () => {
-    onClick(isSaved);
+  const handleLikeClick = () =>{
+    onLikeClick && onLikeClick(card);
+  }
+
+  const handleUnlikeClick = () => {
+    onUnlikeClick && onUnlikeClick(card);
   }
 
   return (
     <div className='movies-card'>
       <ExternalLink href={trailerLink} className='external-link movies-card__link'>
         <img 
-          src={`https://api.nomoreparties.co${image.url}`}
+          src={`${IMAGE_BASE_URL}${isSavedPage ? image: image.url}`}
           alt={nameRU}
           className='movies-card__image'>
         </img>
@@ -22,11 +27,11 @@ function MoviesCard({ card, isSaved, isSavedPage, onClick }) {
       {isSaved || isSavedPage ?
         <Button
           className={`movies-card__remove-button ${isSavedPage && 'movies-card__remove-button_type_saved-page'}`}
-          onClick={handleSaveButtonClick} />:
+          onClick={handleUnlikeClick} />:
         <Button
           className='movies-card__save-button'
           title='Сохранить'
-          onClick={handleSaveButtonClick} />}
+          onClick={handleLikeClick} />}
       <div className='movies-card__container'>
         <p className='movies-card__caption'>
           {card.nameRU}

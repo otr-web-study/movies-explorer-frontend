@@ -8,7 +8,7 @@ import MoviesCardList from '../../components/MoviesCardList';
 import Button from '../../components/Button';
 import Preloader from '../../components/Preloader/Preloader';
 
-function Movies({engine, movies, isPending, onSearch, onMoreClick}) {
+function Movies({engine, movies, isPending, onSearch, onMoreClick, ...props}) {
   const isMoreMovies = engine.getIsMoreMovies(movies.length);
 
   useEffect(() => {
@@ -29,7 +29,7 @@ function Movies({engine, movies, isPending, onSearch, onMoreClick}) {
         <Header />
         <section className='movies'>
           <SearchForm onSubmit={onSearch} engine={engine} />
-          <MoviesCardList movies={movies} engine={engine} />
+          <MoviesCardList movies={movies} engine={engine} {...props} />
           {isMoreMovies && <Button 
             title='Ещё' 
             className='movies__button-more'
