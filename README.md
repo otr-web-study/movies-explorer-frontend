@@ -25,3 +25,7 @@ npm run start
 ```
 ### Макет для верстки доступен по адресу по адресу:
 - https://disk.yandex.ru/d/_1iKOwBBcaCR4A
+### Проект опубликован по адресу:
+- https://otrdiplom.nomoredomains.sbs
+### Pull request:
+- https://github.com/otr-web-study/movies-explorer-frontend/pull/2
