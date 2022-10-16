@@ -39,7 +39,7 @@ function App() {
         .then((data) => {
           if (data) {
             setCurrentUser(data);
-            history.push(path);
+            history.push(path);      
           }
         })
         .catch(err => handleError(err))
@@ -51,11 +51,10 @@ function App() {
 
   useEffect(() => {
     if (currentUser._id) {
+      setMovies(engine.getStoredMovies());
       mainApi.getMovies()
         .then((movies) => engine.loadSavedMovies(movies))
         .then(() => setSavedMovies(engine.getSavedMovies()))
-    } else {
-      setSavedMovies([]);
     }
 
   }, [currentUser._id]);
@@ -110,8 +109,10 @@ function App() {
   }
 
   const handleLogout = () => {
-    localStorage.setItem('jwt', '');
     setCurrentUser({});
+    setSavedMovies([]);
+    setMovies([]);
+    engine.logout();
     history.push('/');
   }
 
@@ -127,6 +128,7 @@ function App() {
       moviesApi.getMovies()
         .then((movies) => engine.loadMovies(movies))
         .then(() => setMovies(engine.searchMovies(searchString, onlyShort, handleError)))
+        .then(() => engine.saveState())
         .catch(() => handleError(MESSAGE_API_ERROR))
         .finally(() => setIsPendingServerResponse(false));
     }

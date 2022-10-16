@@ -9,7 +9,7 @@ import { MESSAGE_NEED_KEYWORD } from '../../constants/constants';
 function SearchForm({ onSubmit, engine, isSavedPage }) {
   const searchString = useInputRefWithValidation('');
   const [onlyShort, setOnlyShort] = useState(false);
-  const [isFormValid] = useFormValid([searchString]);
+  const isFormValid = useFormValid([searchString]);
 
   useEffect(() => {
     searchString.ref.current.value = isSavedPage ? 

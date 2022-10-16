@@ -12,7 +12,7 @@ function Register({onSubmit, isPending}) {
   const email = useInputWithValidation('');
   const password = useInputWithValidation('');
 
-  const [isFormValid] = useFormValid([name, email, password]);
+  const isFormValid = useFormValid([name, email, password]);
 
   const handleSubmit = () => {
     onSubmit(name.value, email.value, password.value);

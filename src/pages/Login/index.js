@@ -10,7 +10,7 @@ function Login({onSubmit, isPending}) {
   const email = useInputWithValidation('');
   const password = useInputWithValidation('');
 
-  const [isFormValid] = useFormValid([email, password]);
+  const isFormValid = useFormValid([email, password]);
 
   const handleSubmit = () => {
     onSubmit(email.value, password.value);

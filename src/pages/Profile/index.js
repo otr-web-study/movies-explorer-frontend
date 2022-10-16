@@ -20,7 +20,8 @@ function Profile({onSubmit, onLogout, isPending}) {
     email.setValue(currentUser.email || '');
   }, [currentUser]);
 
-  const [isFormValid] = useFormValid([name, email]);
+  const isFormValid = useFormValid([name, email]) && 
+    (name.value !== currentUser.name || email.value !== currentUser.email);
 
   const handleSubmit = (evt) => {
     evt.preventDefault();

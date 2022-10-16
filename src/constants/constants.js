@@ -16,6 +16,7 @@ export const MESSAGE_API_ERROR = 'Во время запроса произош�
                                  + 'Возможно, проблема с соединением '
                                  + 'или сервер недоступен. Подождите немного и попробуйте ещё раз';
 export const MESSAGE_NEED_KEYWORD = 'Нужно ввести ключевое слово.';
+export const MESSAGE_WRONG_EMAIL = 'Некорректный email';
 export const ESC_KEY = 'Escape';
 export const ENTER_KEY = 'Enter';
 export const DURATION_SHORT_MOVIE = 40;

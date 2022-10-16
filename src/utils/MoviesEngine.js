@@ -18,6 +18,8 @@ class MoviesEngine {
     this._onlyShortSavedMovies = false;
     this._moviesLimit = 0;
     this._moviesMore = 0;
+
+    this.restoreState();
   }
 
   _getLimitSelector(windowSize) {
@@ -70,6 +72,10 @@ class MoviesEngine {
       handleError(MESSAGE_NOTHING_FOUND);
     }
     return result
+  }
+
+  getStoredMovies() {
+    return this._filteredMovies.slice(0, this._moviesLimit);
   }
 
   getSavedMovies() {
@@ -152,6 +158,40 @@ class MoviesEngine {
   handleSaveMovie(newMovie) {
     this._savedMovies.push(newMovie);
     this._savedIDS[newMovie.movieId] = true;
+  }
+
+  saveState() {
+    const state = {
+      searchString: this._searchMoviesString,
+      onlyShort: this._onlyShortMovies,
+      filteredMovies: this._filteredMovies,
+    }
+
+    localStorage.setItem('state', JSON.stringify(state));
+  }
+
+  restoreState() {
+    const storedState = localStorage.getItem('state');
+    if (!storedState) {
+      return;
+    }
+
+    const state = JSON.parse(storedState);
+    this._searchMoviesString = state.searchString;
+    this._onlyShortMovies = state.onlyShort;
+    this._filteredMovies = state.filteredMovies;
+  }
+
+  logout() {
+    localStorage.clear();
+    this._movies = [];
+    this._savedMovies = [];
+    this._filteredMovies = [];
+    this._savedIDS = [];
+    this._searchMoviesString = '';
+    this._onlyShortMovies = false;
+    this._searchSavedMoviesString = '';
+    this._onlyShortSavedMovies = false;
   }
 }
 
