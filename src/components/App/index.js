@@ -11,6 +11,7 @@ import Profile from '../../pages/Profile';
 import NotFound from '../../pages/NotFound';
 import InfoTooltip from '../InfoTooltip';
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
+import AuthProtectedRoute from '../AuthProtectedRoute';
 import { CurrentUser as CurrentUserContext } from '../../contexts/CurrentUser'
 import mainApi from '../../utils/MainApi';
 import moviesApi from '../../utils/MoviesApi';
@@ -42,7 +43,13 @@ function App() {
             history.push(path);      
           }
         })
-        .catch(err => handleError(err))
+        .catch(err => {
+          setCurrentUser({});
+          setSavedMovies([]);
+          setMovies([]);
+          engine.logout();
+          handleError(err);
+        })
         .finally(() => setIsPendingServerResponse(false));
     } else {
       setIsPendingServerResponse(false);
@@ -171,17 +178,18 @@ function App() {
           <Route exact path='/'>
             <Main isPending={isPendingServerResponse} />
           </Route>
-          <Route 
-            path='/signup'>
-            <Register
-              onSubmit={handleRegister}
-              isPending={isPendingServerResponse} />
-          </Route>
-          <Route path='/signin'>
-            <Login
-              onSubmit={handleLogin}
-              isPending={isPendingServerResponse} />
-          </Route>
+          <AuthProtectedRoute 
+            path='/signup'
+            component={Register}
+            onSubmit={handleRegister}
+            handleError={handleError}
+            isPending={isPendingServerResponse} />
+          <AuthProtectedRoute 
+            path='/signin'
+            component={Login}
+            onSubmit={handleLogin}
+            handleError={handleError}
+            isPending={isPendingServerResponse} />
           <ProtectedRoute
             path='/movies'
             component={Movies}

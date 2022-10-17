@@ -1,7 +1,12 @@
 import { 
   MESSAGE_EMPTY_TOKEN,
   MESSAGE_EMPTY_USER_DATA,
-  USER_FRIENDLY_ERRORS,
+  MESSAGE_ERROR_VALIDATION,
+  MESSAGE_WRONG_EMAIL_OR_PASSWORD,
+  MESSAGE_ERROR_PAGE_NOT_FOUND,
+  MESSAGE_ERROR_EMAIL_ALREADY_EXIST,
+  MESSAGE_SERVER_ERROR,
+  UNKNOWN_ERROR,
 } from '../constants/constants';
 
 export const checkAndSetJWT = ({token}) => {
@@ -26,5 +31,19 @@ export const getErrorMessage = (err) => {
   }
 
   console.log(err.text);
-  return USER_FRIENDLY_ERRORS[err.status];
+
+  switch(err.status) {
+  case 400:
+    return MESSAGE_ERROR_VALIDATION;
+  case 401:
+    return MESSAGE_WRONG_EMAIL_OR_PASSWORD;
+  case 404:
+    return MESSAGE_ERROR_PAGE_NOT_FOUND;
+  case 409:
+    return MESSAGE_ERROR_EMAIL_ALREADY_EXIST;
+  case 500:
+    return MESSAGE_SERVER_ERROR;
+  default:
+    return UNKNOWN_ERROR;
+  }
 }

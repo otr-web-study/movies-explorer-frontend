@@ -3,7 +3,13 @@ import {
   MESSAGE_NOTHING_FOUND,
   WIDTH_DESKTOP,
   WIDTH_MIDDLE,
-  MOVIES_LIMIT,
+  WIDTH_MOBILE,
+  COUNT_CARDS_DESKTOP_WIDTH,
+  COUNT_CARDS_MIDDLE_WIDTH,
+  COUNT_CARDS_MOBILE_WIDTH,
+  COUNT_CARDS_DESKTOP_WIDTH_MORE,
+  COUNT_CARDS_MIDDLE_WIDTH_MORE,
+  COUNT_CARDS_MOBILE_WIDTH_MORE,
 } from '../constants/constants';
 
 class MoviesEngine {
@@ -22,19 +28,29 @@ class MoviesEngine {
     this.restoreState();
   }
 
-  _getLimitSelector(windowSize) {
+  _getWidthSelector(windowSize) {
     if (windowSize >= WIDTH_DESKTOP) {
-      return 'DESKTOP';
+      return WIDTH_DESKTOP;
     } else if (windowSize >= WIDTH_MIDDLE) {
-      return 'MIDDLE';
+      return WIDTH_MIDDLE;
     }
-    return 'MOBILE';
+    return WIDTH_MOBILE;
   }
 
   setLimitMovies(windowSize) {
-    const limit = MOVIES_LIMIT[this._getLimitSelector(windowSize)];
-    this._moviesLimit = limit.COUNT;
-    this._moviesMore = limit.MORE;
+    switch(this._getWidthSelector(windowSize)) {
+    case WIDTH_DESKTOP:
+      this._moviesLimit = COUNT_CARDS_DESKTOP_WIDTH;
+      this._moviesMore = COUNT_CARDS_DESKTOP_WIDTH_MORE;
+      break;
+    case WIDTH_MIDDLE:
+      this._moviesLimit = COUNT_CARDS_MIDDLE_WIDTH;
+      this._moviesMore = COUNT_CARDS_MIDDLE_WIDTH_MORE;
+      break;
+    case WIDTH_MOBILE:
+      this._moviesLimit = COUNT_CARDS_MOBILE_WIDTH;
+      this._moviesMore = COUNT_CARDS_MOBILE_WIDTH_MORE;
+    }
   }
 
   isDataReceived() {
