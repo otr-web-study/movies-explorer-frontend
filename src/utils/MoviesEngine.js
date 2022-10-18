@@ -67,7 +67,7 @@ class MoviesEngine {
     this._savedIDS = this._savedMovies.reduce((res, item) => {
       res[item.movieId] = true;
       return res;
-    }, [])
+    }, []);
   }
 
   searchMovies(searchString, onlyShort, handleError) {

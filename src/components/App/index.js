@@ -52,6 +52,10 @@ function App() {
         })
         .finally(() => setIsPendingServerResponse(false));
     } else {
+      setCurrentUser({});
+      setSavedMovies([]);
+      setMovies([]);
+      engine.logout();
       setIsPendingServerResponse(false);
     }
   }, []);
