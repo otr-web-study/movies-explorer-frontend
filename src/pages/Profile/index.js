@@ -1,20 +1,31 @@
+import { useContext, useEffect } from 'react';
 import './Profile.css';
 import Container from '../../components/Container';
 import Header from '../../components/Header';
 import InputError from '../../components/InputError';
 import Button from '../../components/Button';
+import Preloader from '../../components/Preloader/Preloader';
+import { CurrentUser } from '../../contexts/CurrentUser';
 import { useInputWithValidation, useFormValid } from '../../utils/formValidators';
+import { USERNAME_PATTERN } from '../../constants/constants';
 
-function Profile({onSubmit, onLogout}) {
+function Profile({onSubmit, onLogout, isPending}) {
   const name = useInputWithValidation('');
   const email = useInputWithValidation('');
 
-  const [isFormValid] = useFormValid([name, email]);
+  const currentUser = useContext(CurrentUser);
+
+  useEffect(() => {
+    name.setValue(currentUser.name || '');
+    email.setValue(currentUser.email || '');
+  }, [currentUser]);
+
+  const isFormValid = useFormValid([name, email]) && 
+    (name.value !== currentUser.name || email.value !== currentUser.email);
 
   const handleSubmit = (evt) => {
     evt.preventDefault();
-    
-    onSubmit();
+    onSubmit({name: name.value, email: email.value});
   }
 
   return (
@@ -26,7 +37,7 @@ function Profile({onSubmit, onLogout}) {
         name='profile'
         id='profile'
         noValidate>
-        <h1 className='profile__title'>Привет, Виталий!</h1>
+        <h1 className='profile__title'>{`Привет, ${currentUser.name}!`}</h1>
         <label className='profile__label'>
           Имя
           <input
@@ -34,6 +45,9 @@ function Profile({onSubmit, onLogout}) {
             onChange={name.onChange}
             className='profile__input'
             required
+            minLength='2'
+            maxLength='30'
+            pattern={USERNAME_PATTERN}
             autoComplete='off'
             name='name'
             placeholder='Имя'
@@ -69,6 +83,7 @@ function Profile({onSubmit, onLogout}) {
           className='profile__button-logout'
           title='Выйти из аккаунта'
           onClick={onLogout} />
+        {isPending && <Preloader />}
       </form>
     </Container>
   );

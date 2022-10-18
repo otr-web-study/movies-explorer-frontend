@@ -1,4 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
+import { validate } from 'react-email-validator';
+import { MESSAGE_WRONG_EMAIL } from '../constants/constants';
 
 export const useInputWithValidation = (initialValue) => {
   const [value, setValue] = useState(initialValue);
@@ -8,8 +10,18 @@ export const useInputWithValidation = (initialValue) => {
 
   const onChange = (evt) => {
     changeValue(evt.target.value);
-    setIsValid(evt.target.validity.valid);
-    setValidationMessage(evt.target.validationMessage);
+    if (evt.target.type === 'email') {
+      if (!validate(evt.target.value)) {
+        setIsValid(false);
+        setValidationMessage(MESSAGE_WRONG_EMAIL);
+      } else {
+        setIsValid(true);
+        setValidationMessage('');
+      }
+    } else {
+      setIsValid(evt.target.validity.valid);
+      setValidationMessage(evt.target.validationMessage);
+    }
   }
 
   const resetInput = () => {
@@ -77,5 +89,5 @@ export const useFormValid = (inputs) => {
     setIsFormValid(!inputs.some((input) => !input.isRedacted || !input.isValid));
   }, inputs);
 
-  return [isFormValid];
+  return isFormValid;
 }

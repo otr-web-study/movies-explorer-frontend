@@ -7,20 +7,26 @@ import AboutProject from '../../components/AboutProject';
 import Techs from '../../components/Techs';
 import AboutMe from '../../components/AboutMe';
 import Portfolio from '../../components/Portfolio';
+import Preloader from '../../components/Preloader/Preloader';
 
-function Main({ loggedIn }) {
+function Main({isPending}) {
   return (
-    <Container className='container page__container main'>
-      <Header loggedIn={loggedIn} />
-      <main>
-        <Promo />
-        <AboutProject />
-        <Techs />
-        <AboutMe />
-        <Portfolio />
-      </main>
-      <Footer />
-    </Container>
+    <>
+      {isPending ?
+        <Preloader isMain={true} />:
+        <Container className='container page__container main'>
+          <Header />
+          <main>
+            <Promo />
+            <AboutProject />
+            <Techs />
+            <AboutMe />
+            <Portfolio />
+          </main>
+          <Footer />
+        </Container>
+      }
+    </>
   )
 }
 

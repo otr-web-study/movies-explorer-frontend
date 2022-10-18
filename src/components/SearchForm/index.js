@@ -1,12 +1,22 @@
+import { useState, useEffect } from 'react';
 import './SearchForm.css';
 import Button from '../Button';
 import InputError from '../InputError';
 import FilterCheckbox from '../FilterCheckbox';
 import { useInputRefWithValidation, useFormValid } from '../../utils/formValidators';
+import { MESSAGE_NEED_KEYWORD } from '../../constants/constants';
 
-function SearchForm({ onSubmit }) {
+function SearchForm({ onSubmit, engine, isSavedPage }) {
   const searchString = useInputRefWithValidation('');
-  const [isFormValid] = useFormValid([searchString]);
+  const [onlyShort, setOnlyShort] = useState(false);
+  const isFormValid = useFormValid([searchString]);
+
+  useEffect(() => {
+    searchString.ref.current.value = isSavedPage ? 
+      engine.getSearchSavedMoviesString(): 
+      engine.getSearchMoviesString() || '';
+    setOnlyShort(isSavedPage ? engine.getOnlyShortSavedMovies(): engine.getOnlyShortMovies());
+  }, []);
 
   const handleSubmit = (evt) => {
     evt.preventDefault();
@@ -15,7 +25,15 @@ function SearchForm({ onSubmit }) {
     if (!isFormValid) {
       return;
     }
-    onSubmit(searchString);
+    onSubmit(searchString.ref.current.value, onlyShort);
+  }
+
+  const handleCheckboxChange = () => {
+    const value = !onlyShort;
+    setOnlyShort(value);
+    if (isSavedPage || searchString.ref.current.value) {
+      onSubmit(searchString.ref.current.value, value);
+    }
   }
 
   return (
@@ -31,7 +49,7 @@ function SearchForm({ onSubmit }) {
           onChange={searchString.onChange}
           className='search-form__input'
           placeholder='Фильм'
-          required
+          required={!isSavedPage}
           autoComplete='off'
           name='search'
           id='search' />
@@ -41,9 +59,12 @@ function SearchForm({ onSubmit }) {
         <InputError 
           className='search-form__error'
           isValid={searchString.isValid}
-          errorMessage={searchString.validationMessage} />
+          errorMessage={MESSAGE_NEED_KEYWORD} />
       </div>
-      <FilterCheckbox title='Короткометражки' />
+      <FilterCheckbox 
+        title='Короткометражки'
+        onChange={handleCheckboxChange}
+        value={onlyShort} />
       <div className='search-form__underline'></div>
     </form>
   );

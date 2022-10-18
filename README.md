@@ -10,10 +10,10 @@
 * Отображение списка фильмов загруженных по api
 * Ведение списка понравившихся фильмов
 ### Технологии
-HTML
-CSS
-JS
-React
+* HTML
+* CSS
+* JS
+* React
 ### Инструкция по установке на локальный компьютер
 Клонировать репозиторий и перейти в папку проекта
 ```
@@ -23,5 +23,5 @@ git clone https://github.com/otr-web-study/movies-explorer-frontend.git && cd mo
 ```
 npm run start
 ```
-### Макет для верстки доступен по адресу по адресу:
-- https://disk.yandex.ru/d/_1iKOwBBcaCR4A
+### Проект опубликован по адресу:
+- https://otrdiplom.nomoredomains.sbs

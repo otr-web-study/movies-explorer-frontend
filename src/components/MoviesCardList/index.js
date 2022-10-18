@@ -1,13 +1,13 @@
 import './MoviesCardList.css';
 import MoviesCard from '../MoviesCard';
 
-function MoviesCardList({ cards, isSavedPage }) {
-  const cardsElement = cards.map(item => {
-    const isSaved = item.id % 4 === 0;
+function MoviesCardList({ movies, engine, isSavedPage, ...props }) {
+  const cardsElement = movies.map(item => {
+    const isSaved = isSavedPage || engine.getIsMovieSaved(item.id);
 
     return (
-      <li key={item.id}>
-        <MoviesCard card={item} isSaved={isSaved} isSavedPage={isSavedPage} />
+      <li key={isSavedPage ? item._id: item.id}>
+        <MoviesCard card={item} isSaved={isSaved} isSavedPage={isSavedPage} {...props} />
       </li>
     )});
 

@@ -1,5 +1,4 @@
-import { useState, useEffect } from 'react';
-
+import { useEffect } from 'react';
 import './Movies.css';
 import Container from '../../components/Container';
 import Header from '../../components/Header';
@@ -8,43 +7,33 @@ import SearchForm from '../../components/SearchForm';
 import MoviesCardList from '../../components/MoviesCardList';
 import Button from '../../components/Button';
 import Preloader from '../../components/Preloader/Preloader';
-import { getMovies } from '../../data/fixtures';
 
-function Movies() {
-  const [isPending, setIsPending] = useState(false);
-  const [cards, setCards] = useState([]);
-  const [isMoreMovies, setIsMoreMovies] = useState(false);
+function Movies({engine, movies, isPending, onSearch, onMoreClick, ...props}) {
+  const isMoreMovies = engine.getIsMoreMovies(movies.length);
 
-  const handleMoreButtonClick = () => {
-    console.log('еще')
+  useEffect(() => {
+    window.addEventListener('resize', handleResize);
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
+
+  const handleResize = () => {
+    engine.setLimitMovies(window.innerWidth);
   }
-
-  const handleSearchButtonClick = (searchString) => {
-    setIsPending(true);
-
-    setTimeout(() => {
-      console.log(searchString);
-      setCards(getMovies(12));
-      setIsMoreMovies(true);
-      setIsPending(false);
-    }, 2000);
-  }
-
-  console.log('render');
-
-  useEffect(() => handleSearchButtonClick('tst'), [])
 
   return (
     <Container className='container page__container container__movies'>
       <div>
-        <Header loggedIn={true} />
+        <Header />
         <section className='movies'>
-          <SearchForm onSubmit={handleSearchButtonClick} />
-          <MoviesCardList cards={cards} />
+          <SearchForm onSubmit={onSearch} engine={engine} />
+          <MoviesCardList movies={movies} engine={engine} {...props} />
           {isMoreMovies && <Button 
             title='Ещё' 
             className='movies__button-more'
-            onClick={handleMoreButtonClick} />}
+            onClick={onMoreClick} />}
           {isPending && <Preloader />}
         </section>
       </div>

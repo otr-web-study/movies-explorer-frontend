@@ -60,6 +60,11 @@
   opacity: .2;
 }
 
+.preloader__cover_type_main {
+  background-color: #202020;
+  opacity: 1;
+}
+
 .preloader__container {
   width: 100px;
   height: 100px;

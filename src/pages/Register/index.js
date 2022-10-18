@@ -4,19 +4,25 @@ import InputError from '../../components/InputError';
 import AuthForm from '../../components/AuthForm';
 import { useInputWithValidation, useFormValid } from '../../utils/formValidators';
 import Logo from '../../components/Logo';
+import Preloader from '../../components/Preloader/Preloader';
+import { USERNAME_PATTERN } from '../../constants/constants';
 
-function Register({onSubmit}) {
+function Register({onSubmit, isPending}) {
   const name = useInputWithValidation('');
   const email = useInputWithValidation('');
   const password = useInputWithValidation('');
 
-  const [isFormValid] = useFormValid([name, email, password]);
+  const isFormValid = useFormValid([name, email, password]);
+
+  const handleSubmit = () => {
+    onSubmit(name.value, email.value, password.value);
+  }
 
   return (
     <Container className='container page__container'>
       <section className='register'>
         <AuthForm
-          onSubmit={onSubmit}
+          onSubmit={handleSubmit}
           name='registerForm'
           id='registerForm'
           submitTitle='Зарегистрироваться'
@@ -37,6 +43,9 @@ function Register({onSubmit}) {
               onChange={name.onChange}
               className='auth-form__input'
               required
+              minLength='2'
+              maxLength='30'
+              pattern={USERNAME_PATTERN}
               autoComplete='off'
               name='name'
               id='name' />
@@ -75,6 +84,7 @@ function Register({onSubmit}) {
           </div>
         </AuthForm>
       </section>
+      {isPending && <Preloader />}
     </Container>
   );
 }
